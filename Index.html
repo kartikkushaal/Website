@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIDZ WORLD - Children's Book Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        }
+
+        body {
+            background-color: #f0f9ff;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #fff;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ff6b6b;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Series Sections */
+        .series-section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            font-size: 1.8rem;
+        }
+
+        /* Book Grid */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+
+        .book-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .book-image {
+            height: 220px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-details {
+            padding: 1.2rem;
+        }
+
+        .book-series {
+            font-size: 0.8rem;
+            color: #ff9e9e;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+
+        .book-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .book-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+
+        .add-btn {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .add-btn:hover {
+            background-color: #ff5252;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ff9e9e;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .book-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .book-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>KIDZ WORLD</h1>
+        <p>Shop. Read. Imagine. Repeat.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">New Releases</a></li>
+            <li><a href="#">Bestsellers</a></li>
+            <li><a href="#">Series</a></li>
+            <li><a href="#">Ages 6-9</a></li>
+            <li><a href="#">Ages 10+</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h2>Discover Magical Worlds in Every Book!</h2>
+        </div>
+    </div>
+
+    <!-- Geronimo Stilton Series -->
+    <section class="series-section">
+        <h2 class="section-title"><i class="fas fa-cheese"></i> Geronimo Stilton</h2>
+        <div class="book-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-badge">Bestseller</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/81xL9bFyJ+L._AC_UF1000,1000_QL80_.jpg" alt="Geronimo Stilton: The Kingdom of Fantasy">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Geronimo Stilton #1</div>
+                    <div class="book-title">The Kingdom of Fantasy</div>
+                    <div class="book-author">Geronimo Stilton</div>
+                    <div class="book-price">
+                        <span class="price">$8.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91XQY+XyW0L._AC_UF1000,1000_QL80_.jpg" alt="Geronimo Stilton: The Phantom of the Subway">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Geronimo Stilton #12</div>
+                    <div class="book-title">The Phantom of the Subway</div>
+                    <div class="book-author">Geronimo Stilton</div>
+                    <div class="book-price">
+                        <span class="price">$7.49</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-badge">New</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Geronimo Stilton: The Dragon of Fortune">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Geronimo Stilton #78</div>
+                    <div class="book-title">The Dragon of Fortune</div>
+                    <div class="book-author">Geronimo Stilton</div>
+                    <div class="book-price">
+                        <span class="price">$9.29</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91Uf4G3n3JL._AC_UF1000,1000_QL80_.jpg" alt="Geronimo Stilton: The Hunt for the Golden Book">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Special Edition</div>
+                    <div class="book-title">The Hunt for the Golden Book</div>
+                    <div class="book-author">Geronimo Stilton</div>
+                    <div class="book-price">
+                        <span class="price">$10.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diary of a Wimpy Kid Series -->
+    <section class="series-section" style="background-color: #f9f9f9;">
+        <h2 class="section-title"><i class="fas fa-book-open"></i> Diary of a Wimpy Kid</h2>
+        <div class="book-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-badge">#1 Bestseller</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Diary of a Wimpy Kid">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 1</div>
+                    <div class="book-title">Diary of a Wimpy Kid</div>
+                    <div class="book-author">Jeff Kinney</div>
+                    <div class="book-price">
+                        <span class="price">$7.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Rodrick Rules">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 2</div>
+                    <div class="book-title">Rodrick Rules</div>
+                    <div class="book-author">Jeff Kinney</div>
+                    <div class="book-price">
+                        <span class="price">$8.49</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-badge">New</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="The Deep End">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 15</div>
+                    <div class="book-title">The Deep End</div>
+                    <div class="book-author">Jeff Kinney</div>
+                    <div class="book-price">
+                        <span class="price">$9.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="DIY Book">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Activity Book</div>
+                    <div class="book-title">Do-It-Yourself Book</div>
+                    <div class="book-author">Jeff Kinney</div>
+                    <div class="book-price">
+                        <span class="price">$6.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Harry Potter Series -->
+    <section class="series-section">
+        <h2 class="section-title"><i class="fas fa-hat-wizard"></i> Harry Potter</h2>
+        <div class="book-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-badge">Classic</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Harry Potter and the Sorcerer's Stone">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 1</div>
+                    <div class="book-title">Sorcerer's Stone</div>
+                    <div class="book-author">J.K. Rowling</div>
+                    <div class="book-price">
+                        <span class="price">$10.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Harry Potter and the Chamber of Secrets">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 2</div>
+                    <div class="book-title">Chamber of Secrets</div>
+                    <div class="book-author">J.K. Rowling</div>
+                    <div class="book-price">
+                        <span class="price">$11.49</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Harry Potter and the Prisoner of Azkaban">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Book 3</div>
+                    <div class="book-title">Prisoner of Azkaban</div>
+                    <div class="book-author">J.K. Rowling</div>
+                    <div class="book-price">
+                        <span class="price">$12.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card">
+                <div class="book-badge">Special</div>
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Harry Potter Illustrated Edition">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Illustrated Edition</div>
+                    <div class="book-title">Sorcerer's Stone</div>
+                    <div class="book-author">J.K. Rowling</div>
+                    <div class="book-price">
+                        <span class="price">$24.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Other Popular Series -->
+    <section class="series-section" style="background-color: #f9f9f9;">
+        <h2 class="section-title"><i class="fas fa-star"></i> Other Popular Series</h2>
+        <div class="book-grid">
+            <!-- Book 1 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Matilda">
+                </div>
+                <div class="book-details">
+                    <div class="book-title">Matilda</div>
+                    <div class="book-author">Roald Dahl</div>
+                    <div class="book-price">
+                        <span class="price">$6.80</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="The Famous Five">
+                </div>
+                <div class="book-details">
+                    <div class="book-title">The Famous Five</div>
+                    <div class="book-author">Enid Blyton</div>
+                    <div class="book-price">
+                        <span class="price">$4.59</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Percy Jackson">
+                </div>
+                <div class="book-details">
+                    <div class="book-series">Percy Jackson #1</div>
+                    <div class="book-title">The Lightning Thief</div>
+                    <div class="book-author">Rick Riordan</div>
+                    <div class="book-price">
+                        <span class="price">$8.99</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="book-card">
+                <div class="book-image">
+                    <img src="https://m.media-amazon.com/images/I/91mXWJc3YJL._AC_UF1000,1000_QL80_.jpg" alt="Ruskin Bond">
+                </div>
+                <div class="book-details">
+                    <div class="book-title">For Young Readers</div>
+                    <div class="book-author">Ruskin Bond</div>
+                    <div class="book-price">
+                        <span class="price">$7.29</span>
+                        <button class="add-btn"><i class="fas fa-cart-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Returns</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2023 KIDZ WORLD. All rights reserved.</p>
+    </footer>
+</body>
+</html>
